@@ -67,7 +67,7 @@ class CircularStepper extends StatelessWidget {
               gapSize: gapSize,
             ),
             child: centerWidget),
-        const SizedBox(width: 16),
+        widget ?? const SizedBox(width: 16),
         widget ??
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,31 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class CircularStepper extends StatelessWidget {
+  final double size;
   final int totalSteps;
   final int currentStep;
   final double strokeWidth;
   final double gapSize;
-  final Widget? widget;
-  final String titleText;
-  final TextStyle? titleTextStyle;
-  final bool needSubTitle;
-  final String subTitleText;
-  final TextStyle? subTitleTextStyle;
   final bool removeDefaultCenterText;
   final String centerText;
   final TextStyle? centerTextStyle;
 
   const CircularStepper({
+    this.size = 40,
     this.totalSteps = 5,
     this.currentStep = 1,
     this.strokeWidth = 2.0,
     this.gapSize = 0.00,
-    this.widget,
-    this.titleText = '',
-    this.titleTextStyle,
-    this.needSubTitle = false,
-    this.subTitleText = '',
-    this.subTitleTextStyle,
     this.removeDefaultCenterText = false,
     this.centerText = '',
     this.centerTextStyle,
@@ -41,51 +31,30 @@ class CircularStepper extends StatelessWidget {
         ? centerText.isEmpty
             ? const SizedBox.shrink()
             : SizedBox(
-                height: 40,
-                width: 40,
+                height: size,
+                width: size,
                 child: Center(
                   child: Text(centerText,
                       style: centerTextStyle ??
                           Theme.of(context).textTheme.bodySmall),
                 ))
         : SizedBox(
-            height: 40,
-            width: 40,
+            height: size,
+            width: size,
             child: Center(
               child: Text("$currentStep/$totalSteps",
                   style:
                       centerTextStyle ?? Theme.of(context).textTheme.bodySmall),
             ));
 
-    return Row(
-      children: [
-        CustomPaint(
-            painter: CirclePainter(
-              strokeCount: totalSteps,
-              userStrokeCount: currentStep,
-              strokeWidth: strokeWidth,
-              gapSize: gapSize,
-            ),
-            child: centerWidget),
-        widget ?? const SizedBox(width: 16),
-        widget ??
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  titleText,
-                  style:
-                      titleTextStyle ?? Theme.of(context).textTheme.bodyLarge,
-                ),
-                if (needSubTitle)
-                  Text(subTitleText,
-                      style: subTitleTextStyle ??
-                          Theme.of(context).textTheme.bodySmall)
-              ],
-            )
-      ],
-    );
+    return CustomPaint(
+        painter: CirclePainter(
+          strokeCount: totalSteps,
+          userStrokeCount: currentStep,
+          strokeWidth: strokeWidth,
+          gapSize: gapSize,
+        ),
+        child: centerWidget);
   }
 }
 
